@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { rentVsBuyCalculator } from '../utils/equations/rentVsBuyCalculator';
 
-const RentVsBuyCalculator = () => {
+const SavingsCalculator = () => {
 	// Initialize state for all input fields
 	const [inputs, setInputs] = useState({
 		initialSavings: 50000,
@@ -224,41 +224,17 @@ const RentVsBuyCalculator = () => {
 				<div style={styles.results}>
 					<h3>Results After {inputs.timePeriod} Years</h3>
 					<p>
-						<strong>Rent - Savings:</strong> $
-						{Number(outputs.rentMinusSavings).toLocaleString()}
+						<strong>Renting:</strong> You’ll have spent $
+						{Number(outputs.totalRentPaid).toLocaleString()} on rent and saved $
+						{Number(outputs.futureValueSavings).toLocaleString()}.
 					</p>
 					<p>
-						<strong>Buy - Home Equity:</strong> $
-						{Number(outputs.homeEquity).toLocaleString()}
+						<strong>Buying:</strong> Your property will be worth $
+						{Number(outputs.homeEquity).toLocaleString()}, and you’ll have spent
+						${Number(outputs.totalOngoingCosts).toLocaleString()} on costs + $
+						{Number(outputs.totalMortgagePayments).toLocaleString()} on mortgage
+						payments.
 					</p>
-					<p>
-						<strong>Buying is Better Off:</strong> $
-						{Number(outputs.buyingBetterOff).toLocaleString()}
-					</p>
-					<hr />
-					<h4>Detailed Breakdown:</h4>
-					<ul>
-						<li>
-							<strong>Loan Amount:</strong> $
-							{Number(outputs.loanAmount).toLocaleString()}
-						</li>
-						<li>
-							<strong>Monthly Repayment:</strong> $
-							{Number(outputs.monthlyRepayment).toLocaleString()}
-						</li>
-						<li>
-							<strong>Total Rent Paid:</strong> $
-							{Number(outputs.totalRentPaid).toLocaleString()}
-						</li>
-						<li>
-							<strong>Future Value of Savings:</strong> $
-							{Number(outputs.futureValueSavings).toLocaleString()}
-						</li>
-						<li>
-							<strong>Total Ongoing Costs:</strong> $
-							{Number(outputs.totalOngoingCosts).toLocaleString()}
-						</li>
-					</ul>
 				</div>
 			)}
 		</div>
@@ -312,4 +288,4 @@ const styles = {
 	},
 };
 
-export default RentVsBuyCalculator;
+export default SavingsCalculator;

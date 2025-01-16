@@ -1,5 +1,3 @@
-// rentVsBuyUtils.js
-
 export function rentVsBuyCalculator({
 	initialSavings,
 	savingsReturnRate, // e.g. 4 => 4% annually
@@ -26,7 +24,7 @@ export function rentVsBuyCalculator({
 
 	// 3. Monthly Mortgage Repayment (standard mortgage formula)
 	const monthlyInterestRate = loanInterest / 12;
-	const totalPayments = loanTerm * 12;
+	const totalPayments = loanTerm * 12; // Total loan term in months
 	const powFactor = Math.pow(1 + monthlyInterestRate, totalPayments);
 	const numerator = loanAmount * monthlyInterestRate * powFactor;
 	const denominator = powFactor - 1;
@@ -43,7 +41,7 @@ export function rentVsBuyCalculator({
 		timePeriod
 	);
 
-	// 6. Calculate rent year by year
+	// 6. Total Rent Paid
 	let totalRentPaid = 0;
 	let currentAnnualRent = monthlyRent * 12;
 	for (let y = 1; y <= timePeriod; y++) {
@@ -55,27 +53,24 @@ export function rentVsBuyCalculator({
 	let futureValueSavings = initialSavings;
 	for (let y = 1; y <= timePeriod; y++) {
 		futureValueSavings *= 1 + savingsAnnualRate;
-
-		// Round to cents each year
-		futureValueSavings = Math.floor(futureValueSavings * 100) / 100;
+		futureValueSavings = Math.floor(futureValueSavings * 100) / 100; // Round to cents
 	}
 
-	// 8. Rent - Savings
-	const rentMinusSavings = totalRentPaid + futureValueSavings;
+	// 8. Total Mortgage Payments
+	const totalMortgagePayments =
+		monthlyRepayment * Math.min(totalPayments, timePeriod * 12);
 
-	// 9. Buying is Better Off
-	const buyingBetterOff = homeEquity - rentMinusSavings;
+	// 9. Total Costs of Buying
+	const totalBuyingCosts = totalMortgagePayments + totalOngoingCosts;
 
-	// Return
+	// 10. Return Results
 	return {
-		loanAmount: loanAmount.toFixed(2),
-		monthlyRepayment: monthlyRepayment.toFixed(2),
-		homeEquity: homeEquity.toFixed(2),
-		totalRentPaid: totalRentPaid.toFixed(2),
-		futureValueSavings: futureValueSavings.toFixed(2),
-		totalOngoingCosts: totalOngoingCosts.toFixed(2),
-		rentMinusSavings: rentMinusSavings.toFixed(2),
-		buyingBetterOff: buyingBetterOff.toFixed(2),
+		totalRentPaid: totalRentPaid.toFixed(2), // Total rent paid during the period
+		futureValueSavings: futureValueSavings.toFixed(2), // Value of savings at the end
+		homeEquity: homeEquity.toFixed(2), // Future value of the house
+		totalOngoingCosts: totalOngoingCosts.toFixed(2), // Total ongoing costs
+		totalMortgagePayments: totalMortgagePayments.toFixed(2), // Total mortgage payments
+		totalBuyingCosts: totalBuyingCosts.toFixed(2), // Total cost of buying (mortgage + ongoing costs)
 	};
 }
 
