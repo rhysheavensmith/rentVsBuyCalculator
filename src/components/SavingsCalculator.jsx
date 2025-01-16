@@ -1,10 +1,8 @@
-// RentVsBuyCalculator.jsx
-
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react'; // Adjust import if needed
 import { rentVsBuyCalculator } from '../utils/equations/rentVsBuyCalculator';
 
 const SavingsCalculator = () => {
-	// Initialize state for all input fields
 	const [inputs, setInputs] = useState({
 		initialSavings: 50000,
 		savingsReturnRate: 4.0,
@@ -20,10 +18,8 @@ const SavingsCalculator = () => {
 		loanTerm: 30,
 	});
 
-	// Initialize state for outputs
 	const [outputs, setOutputs] = useState(null);
 
-	// Handle input changes
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setInputs((prev) => ({
@@ -32,260 +28,344 @@ const SavingsCalculator = () => {
 		}));
 	};
 
-	// Handle form submission
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const result = rentVsBuyCalculator(inputs);
 		setOutputs(result);
 	};
 
+	const closeModal = () => {
+		setOutputs(null);
+	};
+
 	return (
-		<div style={styles.container}>
-			<h2>Rent vs Buy Calculator</h2>
-			<form onSubmit={handleSubmit} style={styles.form}>
+		<div className='mx-auto max-w-4xl py-8 px-4 sm:px-6 lg:px-8'>
+			{/* Heading */}
+			<div className='text-center mb-8'>
+				<h1 className='text-3xl font-extrabold text-gray-800 tracking-tight'>
+					Rent vs Buy Calculator
+				</h1>
+				<p className='mt-2 text-sm text-gray-500'>
+					Compare the long-term financial impact of renting versus buying a
+					home.
+				</p>
+			</div>
+
+			{/* Form Container */}
+			<form
+				onSubmit={handleSubmit}
+				className='bg-white rounded-lg shadow-lg px-6 py-8 space-y-8'
+			>
 				{/* Financial Position */}
-				<fieldset style={styles.fieldset}>
-					<legend>Financial Position</legend>
-					<label style={styles.label}>
-						How much have you saved? ($)
-						<input
-							type='number'
-							name='initialSavings'
-							value={inputs.initialSavings}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='1000'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Savings / Investment Return (%)
-						<input
-							type='number'
-							name='savingsReturnRate'
-							value={inputs.savingsReturnRate}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='0.1'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Time Period of Analysis (years)
-						<input
-							type='number'
-							name='timePeriod'
-							value={inputs.timePeriod}
-							onChange={handleChange}
-							style={styles.input}
-							min='1'
-							step='1'
-							required
-						/>
-					</label>
+				<fieldset className='border border-gray-200 rounded-lg p-4'>
+					<legend className='px-2 text-base font-semibold text-gray-700'>
+						Financial Position
+					</legend>
+					<div className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								How much have you saved? ($)
+							</label>
+							<input
+								type='number'
+								name='initialSavings'
+								value={inputs.initialSavings}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='1000'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Savings / Investment Return (%)
+							</label>
+							<input
+								type='number'
+								name='savingsReturnRate'
+								value={inputs.savingsReturnRate}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='0.1'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Time Period of Analysis (years)
+							</label>
+							<input
+								type='number'
+								name='timePeriod'
+								value={inputs.timePeriod}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='1'
+								step='1'
+								required
+							/>
+						</div>
+					</div>
 				</fieldset>
 
 				{/* Rent Details */}
-				<fieldset style={styles.fieldset}>
-					<legend>Rent Details</legend>
-					<label style={styles.label}>
-						Rent Amount ($ per month)
-						<input
-							type='number'
-							name='monthlyRent'
-							value={inputs.monthlyRent}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='100'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Rent Increase Rate (% per annum)
-						<input
-							type='number'
-							name='rentIncreaseRate'
-							value={inputs.rentIncreaseRate}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='0.1'
-							required
-						/>
-					</label>
+				<fieldset className='border border-gray-200 rounded-lg p-4'>
+					<legend className='px-2 text-base font-semibold text-gray-700'>
+						Rent Details
+					</legend>
+					<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Rent Amount ($ per month)
+							</label>
+							<input
+								type='number'
+								name='monthlyRent'
+								value={inputs.monthlyRent}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='100'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Rent Increase Rate (% per annum)
+							</label>
+							<input
+								type='number'
+								name='rentIncreaseRate'
+								value={inputs.rentIncreaseRate}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='0.1'
+								required
+							/>
+						</div>
+					</div>
 				</fieldset>
 
 				{/* Buy Details */}
-				<fieldset style={styles.fieldset}>
-					<legend>Buy Details</legend>
-					<label style={styles.label}>
-						House Purchase Price ($)
-						<input
-							type='number'
-							name='housePurchasePrice'
-							value={inputs.housePurchasePrice}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='1000'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Upfront Purchase Costs ($)
-						<input
-							type='number'
-							name='upfrontPurchaseCosts'
-							value={inputs.upfrontPurchaseCosts}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='1000'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Ongoing Costs ($ per annum)
-						<input
-							type='number'
-							name='ongoingCosts'
-							value={inputs.ongoingCosts}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='100'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Ongoing Cost Increase Rate (% per annum)
-						<input
-							type='number'
-							name='ongoingCostIncreaseRate'
-							value={inputs.ongoingCostIncreaseRate}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='0.1'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Home Appreciation Rate (% per annum)
-						<input
-							type='number'
-							name='homeAppreciationRate'
-							value={inputs.homeAppreciationRate}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='0.1'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Loan Interest Rate (%)
-						<input
-							type='number'
-							name='loanInterestRate'
-							value={inputs.loanInterestRate}
-							onChange={handleChange}
-							style={styles.input}
-							min='0'
-							step='0.1'
-							required
-						/>
-					</label>
-					<label style={styles.label}>
-						Loan Term (years)
-						<input
-							type='number'
-							name='loanTerm'
-							value={inputs.loanTerm}
-							onChange={handleChange}
-							style={styles.input}
-							min='1'
-							step='1'
-							required
-						/>
-					</label>
+				<fieldset className='border border-gray-200 rounded-lg p-4'>
+					<legend className='px-2 text-base font-semibold text-gray-700'>
+						Buy Details
+					</legend>
+					<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								House Purchase Price ($)
+							</label>
+							<input
+								type='number'
+								name='housePurchasePrice'
+								value={inputs.housePurchasePrice}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='1000'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Upfront Purchase Costs ($)
+							</label>
+							<input
+								type='number'
+								name='upfrontPurchaseCosts'
+								value={inputs.upfrontPurchaseCosts}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='1000'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Ongoing Costs ($ per annum)
+							</label>
+							<input
+								type='number'
+								name='ongoingCosts'
+								value={inputs.ongoingCosts}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='100'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Ongoing Cost Increase Rate (% per annum)
+							</label>
+							<input
+								type='number'
+								name='ongoingCostIncreaseRate'
+								value={inputs.ongoingCostIncreaseRate}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='0.1'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Home Appreciation Rate (% per annum)
+							</label>
+							<input
+								type='number'
+								name='homeAppreciationRate'
+								value={inputs.homeAppreciationRate}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='0.1'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Loan Interest Rate (%)
+							</label>
+							<input
+								type='number'
+								name='loanInterestRate'
+								value={inputs.loanInterestRate}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='0'
+								step='0.1'
+								required
+							/>
+						</div>
+						<div>
+							<label className='block text-sm font-medium text-gray-600'>
+								Loan Term (years)
+							</label>
+							<input
+								type='number'
+								name='loanTerm'
+								value={inputs.loanTerm}
+								onChange={handleChange}
+								className='mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                  focus:border-red-500 focus:ring-red-500 sm:text-sm px-3 py-2'
+								min='1'
+								step='1'
+								required
+							/>
+						</div>
+					</div>
 				</fieldset>
 
-				<button type='submit' style={styles.button}>
-					Calculate
-				</button>
+				{/* Submit Button */}
+				<div>
+					<motion.button
+						type='submit'
+						whileHover={{ scale: 1.03 }}
+						whileTap={{ scale: 0.95 }}
+						className='w-full py-3 px-4 rounded-md bg-red-600 
+              text-white font-semibold text-lg 
+              hover:bg-red-700 transition-all duration-300 
+              focus:outline-none focus:ring-2 
+              focus:ring-offset-2 focus:ring-red-500'
+					>
+						Calculate
+					</motion.button>
+				</div>
 			</form>
 
-			{/* Display Results */}
-			{outputs && (
-				<div style={styles.results}>
-					<h3>Results After {inputs.timePeriod} Years</h3>
-					<p>
-						<strong>Renting:</strong> You’ll have spent $
-						{Number(outputs.totalRentPaid).toLocaleString()} on rent and saved $
-						{Number(outputs.futureValueSavings).toLocaleString()}.
-					</p>
-					<p>
-						<strong>Buying:</strong> Your property will be worth $
-						{Number(outputs.homeEquity).toLocaleString()}, and you’ll have spent
-						${Number(outputs.totalOngoingCosts).toLocaleString()} on costs + $
-						{Number(outputs.totalMortgagePayments).toLocaleString()} on mortgage
-						payments.
-					</p>
-				</div>
-			)}
+			{/* Modal for Results */}
+			<AnimatePresence>
+				{outputs && (
+					<motion.div
+						key='backdrop'
+						className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						onClick={closeModal} // Clicking the backdrop closes the modal
+					>
+						{/* Modal Container */}
+						<motion.div
+							key='modal'
+							className='relative bg-[#081d33] text-gray-300 p-6 rounded-lg shadow-lg w-full max-w-2xl mx-4'
+							initial={{ y: -50, opacity: 0, scale: 0.9 }}
+							animate={{ y: 0, opacity: 1, scale: 1 }}
+							exit={{ y: 50, opacity: 0, scale: 0.9 }}
+							transition={{
+								duration: 0.4,
+								type: 'spring',
+								stiffness: 150,
+								damping: 20,
+							}}
+							onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside modal
+						>
+							{/* Close Button */}
+							<button
+								type='button'
+								className='absolute top-3 right-3 text-white hover:text-red-400 transition-colors'
+								onClick={closeModal}
+							>
+								&times;
+							</button>
+
+							<h3 className='text-xl text-white font-bold mb-4'>
+								Results After {inputs.timePeriod} Years
+							</h3>
+							<div className='space-y-3'>
+								<p>
+									<strong className='font-semibold text-white'>Renting:</strong>{' '}
+									You’ll have spent{' '}
+									<span className='font-bold text-white'>
+										${Number(outputs.totalRentPaid).toLocaleString()}
+									</span>{' '}
+									on rent and saved{' '}
+									<span className='font-bold text-white'>
+										${Number(outputs.futureValueSavings).toLocaleString()}
+									</span>
+									.
+								</p>
+								<p>
+									<strong className='font-semibold text-white'>Buying:</strong>{' '}
+									Your property will be worth{' '}
+									<span className='font-bold text-white'>
+										${Number(outputs.homeEquity).toLocaleString()}
+									</span>
+									, and you’ll have spent{' '}
+									<span className='font-bold text-white'>
+										${Number(outputs.totalOngoingCosts).toLocaleString()}
+									</span>{' '}
+									on ongoing costs plus{' '}
+									<span className='font-bold text-white'>
+										${Number(outputs.totalMortgagePayments).toLocaleString()}
+									</span>{' '}
+									on mortgage payments.
+								</p>
+							</div>
+						</motion.div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	);
-};
-
-// Basic inline styles for simplicity
-const styles = {
-	container: {
-		maxWidth: '800px',
-		margin: '0 auto',
-		padding: '20px',
-		fontFamily: 'Arial, sans-serif',
-	},
-	form: {
-		display: 'flex',
-		flexDirection: 'column',
-	},
-	fieldset: {
-		marginBottom: '20px',
-		padding: '10px 20px',
-		border: '1px solid #ccc',
-	},
-	label: {
-		display: 'flex',
-		flexDirection: 'column',
-		marginBottom: '10px',
-		fontSize: '14px',
-	},
-	input: {
-		padding: '8px',
-		fontSize: '14px',
-		marginTop: '5px',
-	},
-	button: {
-		padding: '10px',
-		fontSize: '16px',
-		backgroundColor: '#001fb9',
-		color: '#fff',
-		border: 'none',
-		cursor: 'pointer',
-		borderRadius: '5px',
-		marginTop: '10px',
-	},
-	results: {
-		marginTop: '30px',
-		padding: '20px',
-		border: '1px solid #001fb9',
-		borderRadius: '5px',
-		backgroundColor: '#f0f8ff',
-	},
 };
 
 export default SavingsCalculator;
