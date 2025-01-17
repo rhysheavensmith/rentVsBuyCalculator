@@ -523,8 +523,8 @@ const SavingsCalculator = () => {
 																	<Line
 																		type='monotone'
 																		dataKey='homeEquity'
-																		name='Home Equity'
-																		stroke='#8884d8'
+																		name='Home Value'
+																		stroke='#cf1f3c'
 																		strokeWidth={2}
 																		activeDot={{ r: 6 }}
 																	/>
