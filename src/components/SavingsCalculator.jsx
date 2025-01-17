@@ -50,6 +50,26 @@ const SavingsCalculator = () => {
 		setOutputs(null);
 	};
 
+	// Define animation variants for the accordion
+	const accordionVariants = {
+		closed: {
+			opacity: 0,
+			height: 0,
+			transition: {
+				duration: 0.3,
+				ease: 'easeInOut',
+			},
+		},
+		open: {
+			opacity: 1,
+			height: 'auto',
+			transition: {
+				duration: 0.5,
+				ease: 'easeInOut',
+			},
+		},
+	};
+
 	return (
 		<div className='mx-auto max-w-4xl py-8 px-4 sm:px-6 lg:px-8'>
 			{/* Heading */}
@@ -294,10 +314,10 @@ const SavingsCalculator = () => {
 						whileHover={{ scale: 1.03 }}
 						whileTap={{ scale: 0.95 }}
 						className='w-full py-3 px-4 rounded-md bg-red-600 
-							text-white font-semibold text-lg 
-							hover:bg-red-700 transition-all duration-300 
-							focus:outline-none focus:ring-2 
-							focus:ring-offset-2 focus:ring-red-500'
+              text-white font-semibold text-lg 
+              hover:bg-red-700 transition-all duration-300 
+              focus:outline-none focus:ring-2 
+              focus:ring-offset-2 focus:ring-red-500'
 					>
 						Calculate
 					</motion.button>
@@ -386,119 +406,137 @@ const SavingsCalculator = () => {
 											&#9662;
 										</span>
 									</button>
-									{outputs.showDetails && (
-										<div className='mt-4 space-y-4 text-sm'>
-											{/* Existing Details */}
-											<div>
-												<p>
-													<strong className='font-semibold text-white'>
-														Total Rent Paid:{' '}
-													</strong>
-													${Number(outputs.totalRentPaid).toLocaleString()}
-												</p>
-												<p>
-													<strong className='font-semibold text-white'>
-														Total Mortgage Payments:{' '}
-													</strong>
-													$
-													{Number(
-														outputs.totalMortgagePayments
-													).toLocaleString()}
-												</p>
-												<p>
-													<strong className='font-semibold text-white'>
-														Total Ongoing Costs:{' '}
-													</strong>
-													${Number(outputs.totalOngoingCosts).toLocaleString()}
-												</p>
-											</div>
 
-											{/* Graph Section */}
-											<div className='mt-6'>
-												<h4 className='text-lg font-semibold text-white mb-2'>
-													Financial Growth Over Time
-												</h4>
-												<div className='w-full h-64'>
-													<ResponsiveContainer width='100%' height='100%'>
-														<LineChart
-															data={outputs.yearlyData}
-															margin={{
-																top: 20,
-																right: 30,
-																left: 20,
-																bottom: 5,
-															}}
-														>
-															<CartesianGrid
-																strokeDasharray='3 3'
-																stroke='#555'
-															/>
-															<XAxis
-																dataKey='year'
-																tick={{ fill: '#fff' }}
-																label={{
-																	value: 'Year',
-																	position: 'insideBottomRight',
-																	offset: -5,
-																	fill: '#fff',
-																}}
-															/>
-															<YAxis
-																tickFormatter={(value) =>
-																	`$${(value / 1000).toFixed(0)}k`
-																}
-																tick={{ fill: '#fff' }}
-																label={{
-																	value: 'Amount ($)',
-																	angle: -90,
-																	position: 'insideLeft',
-																	fill: '#fff',
-																}}
-															/>
-															<Tooltip
-																contentStyle={{
-																	backgroundColor: '#333',
-																	border: 'none',
-																	color: '#fff',
-																}}
-																labelStyle={{ color: '#fff' }}
-																itemStyle={{ color: '#fff' }}
-																formatter={(value) =>
-																	`$${Number(value).toLocaleString()}`
-																}
-															/>
-															<Legend
-																verticalAlign='top'
-																height={36}
-																iconType='circle'
-																iconSize={8}
-																formatter={(value) => (
-																	<span style={{ color: '#fff' }}>{value}</span>
-																)}
-															/>
-															<Line
-																type='monotone'
-																dataKey='savings'
-																name='Future Savings'
-																stroke='#82ca9d'
-																strokeWidth={2}
-																activeDot={{ r: 6 }}
-															/>
-															<Line
-																type='monotone'
-																dataKey='homeEquity'
-																name='Home Equity'
-																stroke='#8884d8'
-																strokeWidth={2}
-																activeDot={{ r: 6 }}
-															/>
-														</LineChart>
-													</ResponsiveContainer>
+									{/* Animated Accordion Content */}
+									<AnimatePresence>
+										{outputs.showDetails && (
+											<motion.div
+												key='accordion'
+												initial='closed'
+												animate='open'
+												exit='closed'
+												variants={accordionVariants}
+												className='overflow-hidden'
+											>
+												<div className='mt-4 space-y-4 text-sm'>
+													{/* Existing Details */}
+													<div>
+														<p>
+															<strong className='font-semibold text-white'>
+																Total Rent Paid:{' '}
+															</strong>
+															${Number(outputs.totalRentPaid).toLocaleString()}
+														</p>
+														<p>
+															<strong className='font-semibold text-white'>
+																Total Mortgage Payments:{' '}
+															</strong>
+															$
+															{Number(
+																outputs.totalMortgagePayments
+															).toLocaleString()}
+														</p>
+														<p>
+															<strong className='font-semibold text-white'>
+																Total Ongoing Costs:{' '}
+															</strong>
+															$
+															{Number(
+																outputs.totalOngoingCosts
+															).toLocaleString()}
+														</p>
+													</div>
+
+													{/* Graph Section */}
+													<div className='mt-6'>
+														<h4 className='text-lg font-semibold text-white mb-2'>
+															Financial Growth Over Time
+														</h4>
+														<div className='w-full h-64'>
+															<ResponsiveContainer width='100%' height='100%'>
+																<LineChart
+																	data={outputs.yearlyData}
+																	margin={{
+																		top: 20,
+																		right: 30,
+																		left: 20,
+																		bottom: 5,
+																	}}
+																>
+																	<CartesianGrid
+																		strokeDasharray='3 3'
+																		stroke='#555'
+																	/>
+																	<XAxis
+																		dataKey='year'
+																		tick={{ fill: '#fff' }}
+																		label={{
+																			value: 'Year',
+																			position: 'insideBottomRight',
+																			offset: -5,
+																			fill: '#fff',
+																		}}
+																	/>
+																	<YAxis
+																		tickFormatter={(value) =>
+																			`$${(value / 1000).toFixed(0)}k`
+																		}
+																		tick={{ fill: '#fff' }}
+																		label={{
+																			value: 'Amount ($)',
+																			angle: -90,
+																			position: 'insideLeft',
+																			fill: '#fff',
+																		}}
+																	/>
+																	<Tooltip
+																		contentStyle={{
+																			backgroundColor: '#333',
+																			border: 'none',
+																			color: '#fff',
+																		}}
+																		labelStyle={{ color: '#fff' }}
+																		itemStyle={{ color: '#fff' }}
+																		formatter={(value) =>
+																			`$${Number(value).toLocaleString()}`
+																		}
+																	/>
+																	<Legend
+																		verticalAlign='top'
+																		height={36}
+																		iconType='circle'
+																		iconSize={8}
+																		formatter={(value) => (
+																			<span style={{ color: '#fff' }}>
+																				{value}
+																			</span>
+																		)}
+																	/>
+																	<Line
+																		type='monotone'
+																		dataKey='savings'
+																		name='Future Savings'
+																		stroke='#82ca9d'
+																		strokeWidth={2}
+																		activeDot={{ r: 6 }}
+																	/>
+																	<Line
+																		type='monotone'
+																		dataKey='homeEquity'
+																		name='Home Equity'
+																		stroke='#8884d8'
+																		strokeWidth={2}
+																		activeDot={{ r: 6 }}
+																	/>
+																</LineChart>
+															</ResponsiveContainer>
+														</div>
+													</div>
+													{/* End of Graph Section */}
 												</div>
-											</div>
-											{/* End of Graph Section */}
-										</div>
-									)}
+											</motion.div>
+										)}
+									</AnimatePresence>
 								</div>
 							</div>
 						</motion.div>

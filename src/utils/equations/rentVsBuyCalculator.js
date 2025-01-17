@@ -2,14 +2,14 @@
 
 export function rentVsBuyCalculator({
 	initialSavings,
-	savingsReturnRate, // e.g., 4 => 4% annually
+	savingsReturnRate, // e.g. 4 => 4% annually
 	timePeriod, // in years
 	monthlyRent, // initial monthly rent
-	rentIncreaseRate, // e.g., 3 => 3% per annum
+	rentIncreaseRate, // e.g. 3 => 3% per annum
 	housePurchasePrice,
 	upfrontPurchaseCosts,
 	ongoingCosts, // per annum
-	ongoingCostIncreaseRate, // e.g., 2.5 => 2.5% per annum
+	ongoingCostIncreaseRate, // e.g. 2.5 => 2.5% per annum
 	homeAppreciationRate,
 	loanInterestRate,
 	loanTerm,
@@ -32,11 +32,14 @@ export function rentVsBuyCalculator({
 	const denominator = powFactor - 1;
 	const monthlyRepayment = numerator / denominator;
 
-	// 4. Initialize variables for yearly data
+	// Initialize variables for yearly data
 	let futureValueSavings = initialSavings;
 	let currentAnnualRent = monthlyRent * 12;
 	let currentOngoingCosts = ongoingCosts;
 	let currentHomeValue = housePurchasePrice;
+	let totalOngoingCosts = 0;
+	let totalRentPaid = 0;
+	let totalMortgagePayments = 0;
 
 	const yearlyData = [];
 
@@ -48,6 +51,16 @@ export function rentVsBuyCalculator({
 		// Update home value with appreciation
 		currentHomeValue *= 1 + homeAppreciation;
 		currentHomeValue = Math.floor(currentHomeValue * 100) / 100;
+
+		// Update total rent paid
+		totalRentPaid += currentAnnualRent;
+
+		// Update total mortgage payments
+		const mortgagePaymentsThisYear = monthlyRepayment * 12;
+		totalMortgagePayments += mortgagePaymentsThisYear;
+
+		// Update total ongoing costs
+		totalOngoingCosts += currentOngoingCosts;
 
 		// Push yearly data
 		yearlyData.push({
@@ -61,35 +74,16 @@ export function rentVsBuyCalculator({
 		currentOngoingCosts *= 1 + ongoingCostAnnualIncrease;
 	}
 
-	// 5. Total Ongoing Costs (annual loop)
-	const totalOngoingCosts = calculateTotalOngoingCosts(
-		ongoingCosts,
-		ongoingCostAnnualIncrease,
-		timePeriod
-	);
-
-	// 6. Total Rent Paid
-	let totalRentPaid = 0;
-	let tempCurrentRent = monthlyRent * 12;
-	for (let y = 1; y <= timePeriod; y++) {
-		totalRentPaid += tempCurrentRent;
-		tempCurrentRent *= 1 + rentAnnualIncrease;
-	}
-
-	// 7. Future Value of Savings with end-of-year compounding + rounding
-	// Already computed in the loop
-
-	// 8. Total Mortgage Payments (consistent with original)
-	const totalMortgagePayments =
-		monthlyRepayment * Math.min(totalPayments, timePeriod * 12);
-
-	// 9. Total Costs of Buying
-	const totalBuyingCosts = totalMortgagePayments + totalOngoingCosts;
-
-	// 10. Home Equity after X years
+	// 4. Home Equity after X years
 	const homeEquity = currentHomeValue;
 
-	// 11. Return Results
+	// 5. Future Value of Savings
+	// Already computed in the loop
+
+	// 6. Total Buying Costs
+	const totalBuyingCosts = totalMortgagePayments + totalOngoingCosts;
+
+	// 7. Return Results
 	return {
 		totalRentPaid: totalRentPaid.toFixed(2), // Total rent paid during the period
 		futureValueSavings: futureValueSavings.toFixed(2), // Value of savings at the end
@@ -99,14 +93,4 @@ export function rentVsBuyCalculator({
 		totalBuyingCosts: totalBuyingCosts.toFixed(2), // Total cost of buying (mortgage + ongoing costs)
 		yearlyData, // Array of yearly data for graphing
 	};
-}
-
-function calculateTotalOngoingCosts(annualCost, annualIncreaseRate, years) {
-	let total = 0;
-	let currentCost = annualCost;
-	for (let y = 1; y <= years; y++) {
-		total += currentCost;
-		currentCost *= 1 + annualIncreaseRate;
-	}
-	return total;
 }
