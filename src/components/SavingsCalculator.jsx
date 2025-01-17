@@ -351,6 +351,53 @@ const SavingsCalculator = () => {
 									</span>
 									.
 								</p>
+
+								{/* Accordion for details */}
+								<div className='border-t border-gray-600 mt-4 pt-4'>
+									<button
+										className='w-full text-left font-medium text-white flex items-center justify-between hover:text-red-400 transition-colors'
+										onClick={() =>
+											setOutputs((prev) => ({
+												...prev,
+												showDetails: !prev.showDetails,
+											}))
+										}
+									>
+										<span>
+											{outputs.showDetails ? 'Hide Details' : 'Show Details'}
+										</span>
+										<span
+											className={`transform transition-transform ${
+												outputs.showDetails ? 'rotate-180' : ''
+											}`}
+										>
+											&#9662;
+										</span>
+									</button>
+									{outputs.showDetails && (
+										<div className='mt-4 space-y-2 text-sm'>
+											<p>
+												<strong className='font-semibold text-white'>
+													Total Rent Paid:{' '}
+												</strong>
+												${Number(outputs.totalRentPaid).toLocaleString()}
+											</p>
+											<p>
+												<strong className='font-semibold text-white'>
+													Total Mortgage Payments:{' '}
+												</strong>
+												$
+												{Number(outputs.totalMortgagePayments).toLocaleString()}
+											</p>
+											<p>
+												<strong className='font-semibold text-white'>
+													Total Ongoing Costs:{' '}
+												</strong>
+												${Number(outputs.totalOngoingCosts).toLocaleString()}
+											</p>
+										</div>
+									)}
+								</div>
 							</div>
 						</motion.div>
 					</motion.div>
