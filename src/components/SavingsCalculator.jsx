@@ -328,36 +328,28 @@ const SavingsCalculator = () => {
 							</button>
 
 							<h3 className='text-xl text-white font-bold mb-4'>
-								Results After {inputs.timePeriod} Years
+								Net Worth After {inputs.timePeriod} Years
 							</h3>
 							<div className='space-y-3'>
 								<p>
-									<strong className='font-semibold text-white'>Renting:</strong>{' '}
-									You’ll have spent{' '}
-									<span className='font-bold text-white'>
-										${Number(outputs.totalRentPaid).toLocaleString()}
-									</span>{' '}
-									on rent and saved{' '}
+									<strong className='font-semibold text-white'>
+										As a renter:{' '}
+									</strong>
+									You’ll have a savings of{' '}
 									<span className='font-bold text-white'>
 										${Number(outputs.futureValueSavings).toLocaleString()}
 									</span>
 									.
 								</p>
 								<p>
-									<strong className='font-semibold text-white'>Buying:</strong>{' '}
-									Your property will be worth{' '}
+									<strong className='font-semibold text-white'>
+										As a homeowner:{' '}
+									</strong>
+									You’ll have a property worth{' '}
 									<span className='font-bold text-white'>
 										${Number(outputs.homeEquity).toLocaleString()}
 									</span>
-									, and you’ll have spent{' '}
-									<span className='font-bold text-white'>
-										${Number(outputs.totalOngoingCosts).toLocaleString()}
-									</span>{' '}
-									on ongoing costs plus{' '}
-									<span className='font-bold text-white'>
-										${Number(outputs.totalMortgagePayments).toLocaleString()}
-									</span>{' '}
-									on mortgage payments.
+									.
 								</p>
 							</div>
 						</motion.div>
