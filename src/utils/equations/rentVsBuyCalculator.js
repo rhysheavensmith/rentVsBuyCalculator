@@ -41,6 +41,9 @@ export function rentVsBuyCalculator({
 	let totalRentPaid = 0;
 	let totalMortgagePayments = 0;
 
+	// New variable to track remaining mortgage balance
+	let remainingMortgage = loanAmount;
+
 	const yearlyData = [];
 
 	for (let year = 1; year <= timePeriod; year++) {
@@ -59,14 +62,36 @@ export function rentVsBuyCalculator({
 		const mortgagePaymentsThisYear = monthlyRepayment * 12;
 		totalMortgagePayments += mortgagePaymentsThisYear;
 
+		// Calculate annual interest and principal payments
+
+		for (let month = 1; month <= 12; month++) {
+			// Monthly interest payment based on remaining mortgage
+			const monthlyInterest = remainingMortgage * monthlyInterestRate;
+
+			// Monthly principal payment
+			const monthlyPrincipal = monthlyRepayment - monthlyInterest;
+
+			// Update remaining mortgage
+			remainingMortgage -= monthlyPrincipal;
+
+			// Prevent negative mortgage balance
+			if (remainingMortgage < 0) {
+				remainingMortgage = 0;
+			}
+		}
+
 		// Update total ongoing costs
 		totalOngoingCosts += currentOngoingCosts;
 
-		// Push yearly data
+		// Calculate home equity: currentHomeValue - remainingMortgage
+		const homeEquity = currentHomeValue - remainingMortgage;
+		const roundedHomeEquity = Math.floor(homeEquity * 100) / 100; // Round to cents
+
+		// Push yearly data with accurate home equity
 		yearlyData.push({
 			year,
 			savings: futureValueSavings,
-			homeEquity: currentHomeValue,
+			homeEquity: roundedHomeEquity,
 		});
 
 		// Increase rent and ongoing costs for next year
@@ -75,7 +100,7 @@ export function rentVsBuyCalculator({
 	}
 
 	// 4. Home Equity after X years
-	const homeEquity = currentHomeValue;
+	const finalHomeEquity = currentHomeValue - remainingMortgage;
 
 	// 5. Future Value of Savings
 	// Already computed in the loop
@@ -87,7 +112,7 @@ export function rentVsBuyCalculator({
 	return {
 		totalRentPaid: totalRentPaid.toFixed(2), // Total rent paid during the period
 		futureValueSavings: futureValueSavings.toFixed(2), // Value of savings at the end
-		homeEquity: homeEquity.toFixed(2), // Future value of the house
+		homeEquity: finalHomeEquity.toFixed(2), // Future value of the house minus remaining mortgage
 		totalOngoingCosts: totalOngoingCosts.toFixed(2), // Total ongoing costs
 		totalMortgagePayments: totalMortgagePayments.toFixed(2), // Total mortgage payments
 		totalBuyingCosts: totalBuyingCosts.toFixed(2), // Total cost of buying (mortgage + ongoing costs)

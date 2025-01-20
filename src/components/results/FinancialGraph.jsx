@@ -10,6 +10,19 @@ import {
 } from 'recharts';
 
 const FinancialGraph = ({ yearlyData }) => {
+	// Define the specific tick values you want on the Y-axis
+	const yAxisTicks = [0, 350000, 700000, 1000000, 1500000];
+
+	// Custom tick formatter function
+	const formatYAxisTick = (value) => {
+		if (value >= 1000000) {
+			return `$${(value / 1000000).toFixed(1)}M`;
+		} else if (value >= 1000) {
+			return `$${(value / 1000).toFixed(0)}k`;
+		}
+		return `$${value}`;
+	};
+
 	return (
 		<div className='mt-6'>
 			<h4 className='text-lg font-semibold text-white mb-2'>
@@ -31,21 +44,23 @@ const FinancialGraph = ({ yearlyData }) => {
 							dataKey='year'
 							tick={{ fill: '#fff' }}
 							label={{
-								value: 'Year',
+								// value: 'Year',
 								position: 'insideBottomRight',
 								offset: -5,
 								fill: '#fff',
 							}}
 						/>
 						<YAxis
-							tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+							ticks={yAxisTicks}
+							tickFormatter={formatYAxisTick}
 							tick={{ fill: '#fff' }}
 							label={{
-								value: 'Amount ($)',
+								// value: 'Amount ($)',
 								angle: -90,
 								position: 'insideLeft',
 								fill: '#fff',
 							}}
+							domain={[0, 'dataMax + 50000']}
 						/>
 						<Tooltip
 							contentStyle={{
@@ -69,7 +84,7 @@ const FinancialGraph = ({ yearlyData }) => {
 						<Line
 							type='monotone'
 							dataKey='savings'
-							name='Future Savings'
+							name='Future Savings Value'
 							stroke='#82ca9d'
 							strokeWidth={2}
 							activeDot={{ r: 6 }}
@@ -77,7 +92,7 @@ const FinancialGraph = ({ yearlyData }) => {
 						<Line
 							type='monotone'
 							dataKey='homeEquity'
-							name='Home Value'
+							name='Home Equity Value'
 							stroke='#cf1f3c'
 							strokeWidth={2}
 							activeDot={{ r: 6 }}
@@ -85,6 +100,13 @@ const FinancialGraph = ({ yearlyData }) => {
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
+			{/* Footnote Section */}
+			<footer className='mt-2 text-sm text-gray-400'>
+				*Equity Value is calculated as the property's current value minus the
+				remaining mortgage balance. Over the term, regardless of mortgage
+				payments or rent paid, you'll accumulate savings and build equity in
+				your home. These figures are estimates only and actual values may vary.
+			</footer>
 		</div>
 	);
 };
