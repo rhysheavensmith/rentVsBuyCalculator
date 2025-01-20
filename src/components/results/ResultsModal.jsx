@@ -46,7 +46,7 @@ const ResultsModal = ({
 						</button>
 
 						<h3 className='text-xl text-white font-bold mb-4'>
-							Net Worth After {inputs.timePeriod} Years
+							Net Position After {inputs.timePeriod} Years
 						</h3>
 						<div className='space-y-3'>
 							<p>
@@ -117,13 +117,13 @@ const ResultsModal = ({
 															outputs.totalMortgagePayments
 														).toLocaleString()}
 													</p>
-													<p>
+													{/* <p>
 														<strong className='font-semibold text-white'>
 															Total Ongoing Costs:{' '}
 														</strong>
 														$
 														{Number(outputs.totalOngoingCosts).toLocaleString()}
-													</p>
+													</p> */}
 												</div>
 
 												{/* Graph Section */}

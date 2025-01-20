@@ -1,4 +1,6 @@
 // components/calculator/RentDetails.jsx
+import PropTypes from 'prop-types';
+
 const RentDetails = ({ inputs, handleChange }) => {
 	return (
 		<fieldset className='border border-gray-200 rounded-lg p-4'>
@@ -44,6 +46,14 @@ const RentDetails = ({ inputs, handleChange }) => {
 			</div>
 		</fieldset>
 	);
+};
+
+RentDetails.propTypes = {
+	inputs: PropTypes.shape({
+		monthlyRent: PropTypes.number.isRequired,
+		rentIncreaseRate: PropTypes.number.isRequired,
+	}).isRequired,
+	handleChange: PropTypes.func.isRequired,
 };
 
 export default RentDetails;
