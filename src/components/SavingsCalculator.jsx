@@ -13,6 +13,7 @@ import ResultsModal from './results/ResultsModal';
 const SavingsCalculator = () => {
 	const [inputs, setInputs] = useState({
 		initialSavings: 50000,
+		savingsContribution: 300,
 		savingsReturnRate: 4.0,
 		timePeriod: 30,
 		monthlyRent: 1000,
