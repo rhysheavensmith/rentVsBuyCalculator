@@ -10,7 +10,7 @@ import {
 } from 'recharts';
 
 const FinancialGraph = ({ yearlyData }) => {
-	// Define the specific tick values you want on the Y-axis
+	// Define specific tick values for the Y-axis
 	const yAxisTicks = [0, 350000, 700000, 1000000, 1500000];
 
 	// Custom tick formatter function
@@ -24,42 +24,23 @@ const FinancialGraph = ({ yearlyData }) => {
 	};
 
 	return (
-		<div className='mt-6'>
-			<h4 className='text-lg font-semibold text-white mb-2'>
+		<div className='mt-2'>
+			<h4 className='text-base font-semibold text-white mb-1'>
 				Financial Growth Over Time
 			</h4>
-			<div className='w-full h-64'>
+			{/* Reduced height from h-64 (16rem) to h-48 (12rem) for compactness */}
+			<div className='w-full h-48'>
 				<ResponsiveContainer width='100%' height='100%'>
 					<LineChart
 						data={yearlyData}
-						margin={{
-							top: 20,
-							right: 30,
-							left: 20,
-							bottom: 5,
-						}}
+						margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
 					>
 						<CartesianGrid strokeDasharray='3 3' stroke='#555' />
-						<XAxis
-							dataKey='year'
-							tick={{ fill: '#fff' }}
-							label={{
-								// value: 'Year',
-								position: 'insideBottomRight',
-								offset: -5,
-								fill: '#fff',
-							}}
-						/>
+						<XAxis dataKey='year' tick={{ fill: '#fff', fontSize: '0.8rem' }} />
 						<YAxis
 							ticks={yAxisTicks}
 							tickFormatter={formatYAxisTick}
-							tick={{ fill: '#fff' }}
-							label={{
-								// value: 'Amount ($)',
-								angle: -90,
-								position: 'insideLeft',
-								fill: '#fff',
-							}}
+							tick={{ fill: '#fff', fontSize: '0.8rem' }}
 							domain={[0, 'dataMax + 50000']}
 						/>
 						<Tooltip
@@ -74,11 +55,14 @@ const FinancialGraph = ({ yearlyData }) => {
 						/>
 						<Legend
 							verticalAlign='top'
-							height={36}
+							height={24}
 							iconType='circle'
-							iconSize={8}
+							iconSize={6}
+							wrapperStyle={{ fontSize: '0.75rem' }}
 							formatter={(value) => (
-								<span style={{ color: '#fff' }}>{value}</span>
+								<span style={{ color: '#fff', fontSize: '0.75rem' }}>
+									{value}
+								</span>
 							)}
 						/>
 						<Line
@@ -87,7 +71,7 @@ const FinancialGraph = ({ yearlyData }) => {
 							name='Future Savings Value'
 							stroke='#82ca9d'
 							strokeWidth={2}
-							activeDot={{ r: 6 }}
+							activeDot={{ r: 5 }}
 						/>
 						<Line
 							type='monotone'
@@ -95,17 +79,15 @@ const FinancialGraph = ({ yearlyData }) => {
 							name='Home Equity Value'
 							stroke='#cf1f3c'
 							strokeWidth={2}
-							activeDot={{ r: 6 }}
+							activeDot={{ r: 5 }}
 						/>
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
 			{/* Footnote Section */}
-			<footer className='mt-2 text-sm text-gray-400'>
-				*Equity Value is calculated as the property's current value minus the
-				remaining mortgage balance. Over the term, regardless of mortgage
-				payments or rent paid, you'll accumulate savings and build equity in
-				your home. These figures are estimates only and actual values may vary.
+			<footer className='mt-1 text-xs text-gray-400'>
+				*Equity Value = property value minus remaining mortgage. These figures
+				are estimates only and actual values may vary.
 			</footer>
 		</div>
 	);

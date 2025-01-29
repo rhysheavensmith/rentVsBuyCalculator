@@ -54,7 +54,7 @@ const SavingsCalculator = () => {
 		}));
 	};
 
-	// Define animation variants for the accordion
+	// Optional: animation variants for expansions/collapses in the modal
 	const accordionVariants = {
 		closed: {
 			opacity: 0,
@@ -75,44 +75,38 @@ const SavingsCalculator = () => {
 	};
 
 	return (
-		<div className='mx-auto max-w-4xl py-8 px-4 sm:px-6 lg:px-8'>
-			{/* Heading */}
-			<div className='text-center mb-8'>
-				<h1 className='text-3xl font-extrabold text-gray-800 tracking-tight'>
-					Rent vs Buy Calculator
-				</h1>
-				<p className='mt-2 text-sm text-gray-500'>
-					Compare the long-term financial impact of renting versus buying a
-					home.
-				</p>
+		<div className='flex items-center justify-center min-h-screen overflow-auto bg-gray-50'>
+			<div className='mx-auto max-w-md py-4 px-2'>
+				{/* Heading */}
+				<div className='text-center mb-4'>
+					<h1 className='text-2xl font-bold text-gray-800'>
+						Rent vs Buy Calculator
+					</h1>
+					<p className='mt-1 text-xs text-gray-500'>
+						Compare the long-term financial impact of renting vs. buying.
+					</p>
+				</div>
+
+				{/* Form Container */}
+				<form
+					onSubmit={handleSubmit}
+					className='bg-white rounded shadow px-3 py-3 space-y-4'
+				>
+					<FinancialPosition inputs={inputs} handleChange={handleChange} />
+					<RentDetails inputs={inputs} handleChange={handleChange} />
+					<BuyDetails inputs={inputs} handleChange={handleChange} />
+					<SubmitButton />
+				</form>
+
+				{/* Modal for Results */}
+				<ResultsModal
+					outputs={outputs}
+					inputs={inputs}
+					closeModal={closeModal}
+					accordionVariants={accordionVariants}
+					toggleDetails={toggleDetails}
+				/>
 			</div>
-
-			{/* Form Container */}
-			<form
-				onSubmit={handleSubmit}
-				className='bg-white rounded-lg shadow-lg px-6 py-8 space-y-8'
-			>
-				{/* Financial Position */}
-				<FinancialPosition inputs={inputs} handleChange={handleChange} />
-
-				{/* Rent Details */}
-				<RentDetails inputs={inputs} handleChange={handleChange} />
-
-				{/* Buy Details */}
-				<BuyDetails inputs={inputs} handleChange={handleChange} />
-
-				{/* Submit Button */}
-				<SubmitButton />
-			</form>
-
-			{/* Modal for Results */}
-			<ResultsModal
-				outputs={outputs}
-				inputs={inputs}
-				closeModal={closeModal}
-				accordionVariants={accordionVariants}
-				toggleDetails={toggleDetails}
-			/>
 		</div>
 	);
 };

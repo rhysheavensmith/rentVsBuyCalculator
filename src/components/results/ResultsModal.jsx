@@ -1,6 +1,4 @@
-// components/results/ResultsModal.jsx
-
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import FinancialGraph from './FinancialGraph';
 
 const ResultsModal = ({
@@ -15,7 +13,7 @@ const ResultsModal = ({
 			{outputs && (
 				<motion.div
 					key='backdrop'
-					className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'
+					className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
@@ -24,7 +22,7 @@ const ResultsModal = ({
 					{/* Modal Container */}
 					<motion.div
 						key='modal'
-						className='relative bg-[#081d33] text-gray-300 p-6 rounded-lg shadow-lg w-full max-w-2xl mx-4'
+						className='relative bg-[#081d33] text-gray-300 w-full max-w-md mx-4 p-3 rounded shadow-lg'
 						initial={{ y: -50, opacity: 0, scale: 0.9 }}
 						animate={{ y: 0, opacity: 1, scale: 1 }}
 						exit={{ y: 50, opacity: 0, scale: 0.9 }}
@@ -39,31 +37,29 @@ const ResultsModal = ({
 						{/* Close Button */}
 						<button
 							type='button'
-							className='absolute top-3 right-3 text-white hover:text-red-400 transition-colors'
+							className='absolute top-2 right-2 text-white hover:text-red-400 transition-colors text-xl'
 							onClick={closeModal}
 						>
 							&times;
 						</button>
 
-						<h3 className='text-xl text-white font-bold mb-4'>
-							Net Position After {inputs.timePeriod} Years
+						{/* Modal Title */}
+						<h3 className='text-lg text-white font-bold mb-2'>
+							Financials After {inputs.timePeriod} Years
 						</h3>
-						<div className='space-y-3'>
+
+						<div className='space-y-2 text-sm'>
 							<p>
-								<strong className='font-semibold text-white'>
-									As a renter:{' '}
-								</strong>
-								You’ll have a savings of{' '}
+								<strong className='font-semibold text-white'>Renting</strong> -
+								Net Position:{' '}
 								<span className='font-bold text-white'>
 									${Number(outputs.futureValueSavings).toLocaleString()}
 								</span>
 								.
 							</p>
 							<p>
-								<strong className='font-semibold text-white'>
-									As a homeowner:{' '}
-								</strong>
-								You’ll have a property worth{' '}
+								<strong className='font-semibold text-white'>Buying</strong> -
+								Net Position:{' '}
 								<span className='font-bold text-white'>
 									${Number(outputs.homeEquity).toLocaleString()}
 								</span>
@@ -71,7 +67,7 @@ const ResultsModal = ({
 							</p>
 
 							{/* Accordion for details */}
-							<div className='border-t border-gray-600 mt-4 pt-4'>
+							<div className='border-t border-gray-600 mt-2 pt-2'>
 								<button
 									className='w-full text-left font-medium text-white flex items-center justify-between hover:text-red-400 transition-colors'
 									onClick={toggleDetails}
@@ -99,32 +95,30 @@ const ResultsModal = ({
 											variants={accordionVariants}
 											className='overflow-hidden'
 										>
-											<div className='mt-4 space-y-4 text-sm'>
-												{/* Existing Details */}
-												<div>
-													<p>
-														<strong className='font-semibold text-white'>
-															Total Rent Paid:{' '}
-														</strong>
-														${Number(outputs.totalRentPaid).toLocaleString()}
-													</p>
-													<p>
-														<strong className='font-semibold text-white'>
-															Total Mortgage Payments:{' '}
-														</strong>
-														$
-														{Number(
-															outputs.totalMortgagePayments
-														).toLocaleString()}
-													</p>
-													{/* <p>
-														<strong className='font-semibold text-white'>
-															Total Ongoing Costs:{' '}
-														</strong>
-														$
-														{Number(outputs.totalOngoingCosts).toLocaleString()}
-													</p> */}
-												</div>
+											<div className='mt-2 text-sm space-y-3'>
+												{/* Example: Additional numeric details, if you like */}
+												{/* 
+                        <div>
+                          <p>
+                            <strong className="font-semibold text-white">
+                              Total Rent Paid:{' '}
+                            </strong>
+                            ${Number(outputs.totalRentPaid).toLocaleString()}
+                          </p>
+                          <p>
+                            <strong className="font-semibold text-white">
+                              Total Mortgage Payments:{' '}
+                            </strong>
+                            ${Number(outputs.totalMortgagePayments).toLocaleString()}
+                          </p>
+                          <p>
+                            <strong className="font-semibold text-white">
+                              Total Ongoing Costs:{' '}
+                            </strong>
+                            ${Number(outputs.totalOngoingCosts).toLocaleString()}
+                          </p>
+                        </div>
+                        */}
 
 												{/* Graph Section */}
 												<FinancialGraph yearlyData={outputs.yearlyData} />
