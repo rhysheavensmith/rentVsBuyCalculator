@@ -25,7 +25,7 @@ const BuyDetails = ({ inputs, handleChange }) => {
 				</div>
 
 				{/* Upfront Purchase Costs */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>
 						Upfront Costs ($)
 					</label>
@@ -41,10 +41,10 @@ const BuyDetails = ({ inputs, handleChange }) => {
 						step='1000'
 						required
 					/>
-				</div>
+				</div> */}
 
 				{/* Ongoing Costs */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>
 						Ongoing Costs ($ / year)
 					</label>
@@ -60,10 +60,10 @@ const BuyDetails = ({ inputs, handleChange }) => {
 						step='100'
 						required
 					/>
-				</div>
+				</div> */}
 
 				{/* Ongoing Cost Increase Rate */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>
 						Ongoing Cost Increase (% / year)
 					</label>
@@ -79,10 +79,10 @@ const BuyDetails = ({ inputs, handleChange }) => {
 						step='0.1'
 						required
 					/>
-				</div>
+				</div> */}
 
 				{/* Home Appreciation Rate */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>
 						Home Appreciation (% / year)
 					</label>
@@ -98,7 +98,7 @@ const BuyDetails = ({ inputs, handleChange }) => {
 						step='0.1'
 						required
 					/>
-				</div>
+				</div> */}
 
 				{/* Loan Interest Rate */}
 				<div>
