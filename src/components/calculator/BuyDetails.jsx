@@ -101,7 +101,7 @@ const BuyDetails = ({ inputs, handleChange }) => {
 				</div> */}
 
 				{/* Loan Interest Rate */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>
 						Loan Interest (%)
 					</label>
@@ -117,7 +117,7 @@ const BuyDetails = ({ inputs, handleChange }) => {
 						step='0.1'
 						required
 					/>
-				</div>
+				</div> */}
 
 				{/* Loan Term */}
 				<div>

@@ -25,7 +25,7 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 				</div>
 
 				{/* Savings / Investment Return */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>Return (%)</label>
 					<input
 						type='number'
@@ -39,7 +39,7 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 						step='0.1'
 						required
 					/>
-				</div>
+				</div> */}
 
 				{/* Monthly Savings Contribution */}
 				<div>
@@ -61,7 +61,7 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 				</div>
 
 				{/* Time Period */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>
 						Analysis Period (years)
 					</label>
@@ -77,7 +77,7 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 						step='1'
 						required
 					/>
-				</div>
+				</div> */}
 			</div>
 		</fieldset>
 	);

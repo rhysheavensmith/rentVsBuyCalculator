@@ -27,7 +27,7 @@ const RentDetails = ({ inputs, handleChange }) => {
 				</div>
 
 				{/* Rent Increase Rate */}
-				<div>
+				{/* <div>
 					<label className='block text-xs text-gray-600'>
 						Rent Increase Rate (% / year)
 					</label>
@@ -43,7 +43,7 @@ const RentDetails = ({ inputs, handleChange }) => {
 						step='0.1'
 						required
 					/>
-				</div>
+				</div> */}
 			</div>
 		</fieldset>
 	);
