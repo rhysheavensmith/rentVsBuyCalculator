@@ -17,33 +17,12 @@ const RentDetails = ({ inputs, handleChange }) => {
 						name='monthlyRent'
 						value={inputs.monthlyRent}
 						onChange={handleChange}
-						className='mt-1 w-full rounded border border-gray-300 
-                       text-sm px-2 py-1 focus:border-red-500 
-                       focus:ring-red-500'
+						className='mt-1 w-full rounded border border-gray-300 text-sm px-2 py-1 focus:border-red-500 focus:ring-red-500'
 						min='0'
 						step='100'
 						required
 					/>
 				</div>
-
-				{/* Rent Increase Rate */}
-				{/* <div>
-					<label className='block text-xs text-gray-600'>
-						Rent Increase Rate (% / year)
-					</label>
-					<input
-						type='number'
-						name='rentIncreaseRate'
-						value={inputs.rentIncreaseRate}
-						onChange={handleChange}
-						className='mt-1 w-full rounded border border-gray-300 
-                       text-sm px-2 py-1 focus:border-red-500 
-                       focus:ring-red-500'
-						min='0'
-						step='0.1'
-						required
-					/>
-				</div> */}
 			</div>
 		</fieldset>
 	);

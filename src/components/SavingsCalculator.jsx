@@ -7,10 +7,11 @@ import RentDetails from './calculator/RentDetails';
 import BuyDetails from './calculator/BuyDetails';
 import SubmitButton from './calculator/SubmitButton';
 
-// Import Results Components
+// Import Results Component
 import ResultsModal from './results/ResultsModal';
 
 const SavingsCalculator = () => {
+	// Initial inputs with default values
 	const [inputs, setInputs] = useState({
 		initialSavings: 50000,
 		savingsContribution: 300,
@@ -27,7 +28,8 @@ const SavingsCalculator = () => {
 		loanTerm: 30,
 	});
 
-	const [outputs, setOutputs] = useState(null);
+	// Compute initial outputs so the modal shows results on first render
+	const [outputs, setOutputs] = useState(() => rentVsBuyCalculator(inputs));
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -43,18 +45,7 @@ const SavingsCalculator = () => {
 		setOutputs(result);
 	};
 
-	const closeModal = () => {
-		setOutputs(null);
-	};
-
-	const toggleDetails = () => {
-		setOutputs((prev) => ({
-			...prev,
-			showDetails: !prev.showDetails,
-		}));
-	};
-
-	// Optional: animation variants for expansions/collapses in the modal
+	// Animation variants (optional for modal expansion/collapse)
 	const accordionVariants = {
 		closed: {
 			opacity: 0,
@@ -76,35 +67,34 @@ const SavingsCalculator = () => {
 
 	return (
 		<div className='flex items-center justify-center min-h-screen overflow-auto bg-gray-50'>
-			<div className='mx-auto max-w-md py-4 px-2'>
+			<div className='mx-auto max-w-[60%] gap-5 py-4 px-2 flex max-md:flex-col'>
 				{/* Heading */}
-				<div className='text-center mb-4'>
-					<h1 className='text-2xl font-bold text-gray-800'>
-						Rent vs Buy Calculator
-					</h1>
-					<p className='mt-1 text-xs text-gray-500'>
-						Compare the long-term financial impact of renting vs. buying.
-					</p>
+				<div className='w-full max-w-lg'>
+					<div className='text-center mb-4'>
+						<h1 className='text-2xl font-bold text-gray-800'>
+							Rent vs Buy Calculator
+						</h1>
+						<p className='mt-1 text-xs text-gray-500'>
+							Compare the long-term financial impact of renting vs. buying.
+						</p>
+					</div>
+					{/* Calculator Form */}
+					<form
+						onSubmit={handleSubmit}
+						className='bg-white rounded shadow px-3 py-3 space-y-4'
+					>
+						<FinancialPosition inputs={inputs} handleChange={handleChange} />
+						<RentDetails inputs={inputs} handleChange={handleChange} />
+						<BuyDetails inputs={inputs} handleChange={handleChange} />
+						<SubmitButton />
+					</form>
 				</div>
 
-				{/* Form Container */}
-				<form
-					onSubmit={handleSubmit}
-					className='bg-white rounded shadow px-3 py-3 space-y-4'
-				>
-					<FinancialPosition inputs={inputs} handleChange={handleChange} />
-					<RentDetails inputs={inputs} handleChange={handleChange} />
-					<BuyDetails inputs={inputs} handleChange={handleChange} />
-					<SubmitButton />
-				</form>
-
-				{/* Modal for Results */}
+				{/* Always-visible Results Modal */}
 				<ResultsModal
 					outputs={outputs}
 					inputs={inputs}
-					closeModal={closeModal}
 					accordionVariants={accordionVariants}
-					toggleDetails={toggleDetails}
 				/>
 			</div>
 		</div>

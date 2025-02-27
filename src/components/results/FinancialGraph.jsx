@@ -10,10 +10,8 @@ import {
 } from 'recharts';
 
 const FinancialGraph = ({ yearlyData }) => {
-	// Define specific tick values for the Y-axis
+	// Define Y-axis ticks and formatter
 	const yAxisTicks = [0, 350000, 700000, 1000000, 1500000];
-
-	// Custom tick formatter function
 	const formatYAxisTick = (value) => {
 		if (value >= 1000000) {
 			return `$${(value / 1000000).toFixed(1)}M`;
@@ -28,7 +26,6 @@ const FinancialGraph = ({ yearlyData }) => {
 			<h4 className='text-base font-semibold text-white mb-1'>
 				Financial Growth Over Time
 			</h4>
-			{/* Reduced height from h-64 (16rem) to h-48 (12rem) for compactness */}
 			<div className='w-full h-48'>
 				<ResponsiveContainer width='100%' height='100%'>
 					<LineChart
@@ -84,7 +81,6 @@ const FinancialGraph = ({ yearlyData }) => {
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
-			{/* Footnote Section */}
 			<footer className='mt-1 text-xs text-gray-400'>
 				*Equity Value = property value minus remaining mortgage. These figures
 				are estimates only and actual values may vary.
