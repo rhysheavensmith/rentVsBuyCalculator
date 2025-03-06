@@ -8,7 +8,7 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 				{/* Initial Savings */}
 				<div>
 					<label className='block text-xs text-gray-600'>
-						Initial Savings ($)
+						Current Savings ($)
 					</label>
 					<input
 						type='number'
