@@ -67,7 +67,7 @@ const SavingsCalculator = () => {
 
 	return (
 		<div className='flex items-center justify-center min-h-screen overflow-auto bg-gray-50'>
-			<div className='mx-auto max-w-[60%] gap-5 py-4 px-2 flex max-md:flex-col'>
+			<div className='max-sm:mx-auto max-sm:max-w-[75%] max-w-[80%] gap-5 py-4 px-2 flex max-md:flex-col'>
 				{/* Heading */}
 				<div className='w-full max-w-lg'>
 					<div className='text-center mb-4'>

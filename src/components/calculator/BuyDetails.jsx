@@ -16,8 +16,6 @@ const BuyDetails = ({ inputs, handleChange }) => {
 						value={inputs.housePurchasePrice}
 						onChange={handleChange}
 						className='mt-1 w-full rounded border border-gray-300 text-sm px-2 py-1 focus:border-red-500 focus:ring-red-500'
-						min='0'
-						step='1000'
 						required
 					/>
 				</div>
@@ -33,8 +31,6 @@ const BuyDetails = ({ inputs, handleChange }) => {
 						value={inputs.loanTerm}
 						onChange={handleChange}
 						className='mt-1 w-full rounded border border-gray-300 text-sm px-2 py-1 focus:border-red-500 focus:ring-red-500'
-						min='1'
-						step='1'
 						required
 					/>
 				</div>

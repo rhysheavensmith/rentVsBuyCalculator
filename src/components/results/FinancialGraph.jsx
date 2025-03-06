@@ -82,8 +82,15 @@ const FinancialGraph = ({ yearlyData }) => {
 				</ResponsiveContainer>
 			</div>
 			<footer className='mt-1 text-xs text-gray-400'>
-				*Equity Value = property value minus remaining mortgage. These figures
-				are estimates only and actual values may vary.
+				<p>
+					*Equity Value = property value minus remaining mortgage. These figures
+					are estimates only and actual values may vary.
+				</p>
+				<br />
+				<p>
+					*Future Savings Value = Total value of savings + monthly contribution
+					compounding at 4% per annum.
+				</p>
 			</footer>
 		</div>
 	);

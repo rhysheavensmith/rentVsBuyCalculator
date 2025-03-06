@@ -16,8 +16,6 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 						value={inputs.initialSavings}
 						onChange={handleChange}
 						className='mt-1 w-full rounded border border-gray-300 text-sm px-2 py-1 focus:border-red-500 focus:ring-red-500'
-						min='0'
-						step='1000'
 						required
 					/>
 				</div>
@@ -25,7 +23,7 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 				{/* Monthly Savings Contribution */}
 				<div>
 					<label className='block text-xs text-gray-600'>
-						Monthly Contribution ($)
+						Monthly Savings Contribution ($)
 					</label>
 					<input
 						type='number'
@@ -33,8 +31,6 @@ const FinancialPosition = ({ inputs, handleChange }) => {
 						value={inputs.savingsContribution}
 						onChange={handleChange}
 						className='mt-1 w-full rounded border border-gray-300 text-sm px-2 py-1 focus:border-red-500 focus:ring-red-500'
-						min='0'
-						step='0.1'
 						required
 					/>
 				</div>

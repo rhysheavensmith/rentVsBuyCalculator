@@ -8,16 +8,16 @@ const ResultsModal = ({ outputs, inputs }) => {
 			</h3>
 			<div className='space-y-2 text-sm'>
 				<p>
-					<strong className='font-semibold text-white'>Renting</strong> - Net
-					Position:{' '}
+					<strong className='font-semibold text-white'>Renting</strong> - Total
+					Savings Accrued:{' '}
 					<span className='font-bold text-white'>
 						${Number(outputs.futureValueSavings).toLocaleString()}
 					</span>
 					.
 				</p>
 				<p>
-					<strong className='font-semibold text-white'>Buying</strong> - Net
-					Position:{' '}
+					<strong className='font-semibold text-white'>Buying</strong> - Total
+					Home Equity:{' '}
 					<span className='font-bold text-white'>
 						${Number(outputs.homeEquity).toLocaleString()}
 					</span>
